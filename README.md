@@ -30,20 +30,7 @@ Stores previous outputs for context-aware execution
 Local models (Ollama)
 Cloud APIs (OpenAI, etc.)
 🏗️ Architecture
-User Goal
-   ↓
-Planner (LLM)
-   ↓
-Task List
-   ↓
-Executor Agent
-   ↓
-Tools (Code, File, Search)
-   ↓
-Memory (Vector DB)
-   ↓
-Loop until completion
-🛠️ Tech Stack
+
 Layer	Technology
 Backend	Python, FastAPI
 LLM	Ollama / OpenAI
@@ -51,24 +38,6 @@ Memory	ChromaDB / FAISS
 Frontend	React / Streamlit
 Tools	Custom Python Modules
 📂 Project Structure
-ai-agent-builder/
-│
-├── backend/
-│   ├── main.py
-│   ├── agent/
-│   │   ├── planner.py
-│   │   ├── executor.py
-│   │   ├── memory.py
-│   │   └── tools/
-│   │       ├── search.py
-│   │       ├── code.py
-│   │       └── file.py
-│
-├── frontend/
-│   ├── app.jsx
-│
-├── requirements.txt
-└── README.md
 🚀 Getting Started
 1️⃣ Clone the Repository
 git clone https://github.com/your-username/ai-agent-builder.git
@@ -87,9 +56,7 @@ Step 1: Create frontend UI
 Step 2: Setup backend API
 Step 3: Connect frontend with backend
 Step 4: Store data in database
-
 👉 The agent then executes these steps automatically
-
 🎯 Use Cases
 🧑‍💻 Automating development workflows
 📦 Generating full-stack applications
@@ -110,10 +77,6 @@ Fork the repo
 Create a new branch
 Commit your changes
 Open a Pull Request
-
-
-
-
 
 
 📜 License
