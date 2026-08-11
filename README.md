@@ -1,84 +1,104 @@
-🚀 AI Agent Builder
-Autonomous AI that Plans, Executes, and Learns
+# AI Agent Builder
 
-“From prompt to execution — an AI that doesn’t just respond, but acts.”
+Autonomous AI that plans, executes, and learns to complete user-defined goals.
 
-🧠 Overview
+## Overview
 
-AI Agent Builder is an intelligent system that transforms a simple user goal into structured plans and autonomous actions using Large Language Models (LLMs).
+AI Agent Builder transforms a user goal into a structured plan and then executes that plan autonomously using Large Language Models (LLMs). Instead of producing single responses, the system breaks goals into tasks, selects tools, runs steps, evaluates results, and iterates using memory.
 
-Unlike traditional chatbots, this project implements an agentic workflow where the AI:
+## Key features
 
-Breaks down goals into tasks
-Chooses the right tools
-Executes actions step-by-step
-Learns from previous steps using memory
-⚡ Features
-🧠 Goal → Task Planning
-Converts high-level prompts into actionable steps using LLM reasoning
-🤖 Autonomous Execution Engine
-Executes tasks sequentially with dynamic decision-making
-🛠️ Tool Integration
-Code Generator
-File Manager
-Web Search (optional)
-🔁 Iterative Agent Loop
-Continuously plans → executes → evaluates → improves
-🧠 Memory (RAG-based)
-Stores previous outputs for context-aware execution
-⚙️ Flexible LLM Support
-Local models (Ollama)
-Cloud APIs (OpenAI, etc.)
-🏗️ Architecture
+- Goal → Task planning: turn high-level goals into actionable steps using LLM reasoning.
+- Autonomous execution engine: run tasks step-by-step with dynamic decision-making.
+- Tool integrations: code generator, file manager, optional web search, and custom Python tools.
+- Iterative agent loop: plan → execute → evaluate → improve.
+- Memory (RAG-based): store and retrieve past outputs for context-aware execution.
+- Flexible LLM support: local models (e.g., Ollama) or cloud APIs (OpenAI, etc.).
 
-Layer	Technology
-Backend	Python, FastAPI
-LLM	Ollama / OpenAI
-Memory	ChromaDB / FAISS
-Frontend	React / Streamlit
-Tools	Custom Python Modules
-📂 Project Structure
-🚀 Getting Started
-1️⃣ Clone the Repository
-git clone https://github.com/your-username/ai-agent-builder.git
-cd ai-agent-builder
-2️⃣ Install Dependencies
-pip install -r requirements.txt
-3️⃣ Run the Backend
-uvicorn main:app --reload
-4️⃣ (Optional) Run with Ollama
-ollama run llama3
-💡 Example Usage
-Input:
-Build a simple todo app
-Output:
-Step 1: Create frontend UI
-Step 2: Setup backend API
-Step 3: Connect frontend with backend
-Step 4: Store data in database
-👉 The agent then executes these steps automatically
-🎯 Use Cases
-🧑‍💻 Automating development workflows
-📦 Generating full-stack applications
-🧠 Personal AI assistant
-⚙️ Experimenting with autonomous agents
-🏆 Hackathon-ready AI project
-🔥 Future Improvements
-Multi-agent collaboration (Planner + Executor + Critic)
-Browser automation
-GitHub integration (auto repo creation)
-Plugin system for tools
-Voice-controlled agents
-🤝 Contributing
+## Architecture
 
-Contributions are welcome!
+- Backend: Python, FastAPI
+- LLM: Ollama / OpenAI
+- Memory: ChromaDB / FAISS
+- Frontend: React / Streamlit (optional)
+- Tools: custom Python modules
 
-Fork the repo
-Create a new branch
-Commit your changes
-Open a Pull Request
+## Project structure
 
+A high-level layout of the repository (folders may vary):
 
-📜 License
+- app/          - backend application and agent logic
+- tools/        - tool adapters and utilities
+- frontend/     - optional UI (React / Streamlit)
+- memory/       - memory and vector-store helpers
+- tests/        - unit and integration tests
+- requirements.txt
+- README.md
+
+## Quick start
+
+1. Clone the repository
+
+   git clone https://github.com/RamaVenkataCharan/AI-Agent-Builder.git
+   cd AI-Agent-Builder
+
+2. (Optional) Create and activate a virtual environment
+
+   python -m venv .venv
+   source .venv/bin/activate   # macOS / Linux
+   .venv\Scripts\activate    # Windows
+
+3. Install dependencies
+
+   pip install -r requirements.txt
+
+4. Run the backend
+
+   uvicorn main:app --reload
+
+5. (Optional) Run with Ollama local model
+
+   ollama run llama3
+
+## Example
+
+Input: "Build a simple todo app"
+
+Agent output (example plan):
+
+1. Create frontend UI
+2. Setup backend API
+3. Connect frontend with backend
+4. Store data in a database
+
+The agent can then execute these steps automatically using integrated tools.
+
+## Use cases
+
+- Automating development workflows
+- Generating full-stack application scaffolding
+- Personal AI assistant for task automation
+- Experimenting with autonomous agents for research and hackathons
+
+## Roadmap / Future improvements
+
+- Multi-agent collaboration (Planner + Executor + Critic)
+- Browser automation
+- GitHub integration (auto repo creation / PRs)
+- Plugin system for third-party tools
+- Voice-controlled agents
+
+## Contributing
+
+Contributions are welcome — please follow these steps:
+
+1. Fork the repository
+2. Create a feature branch (git checkout -b feat/my-feature)
+3. Commit your changes
+4. Open a Pull Request describing your changes
+
+Please follow any existing project contribution guidelines and run tests locally.
+
+## License
 
 This project is licensed under the MIT License.
