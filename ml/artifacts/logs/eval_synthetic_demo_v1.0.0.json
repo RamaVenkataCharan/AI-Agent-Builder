@@ -1,0 +1,28 @@
+{
+  "data_source_tag": "synthetic_demo",
+  "num_test_samples": 24,
+  "test_theft_count": 3,
+  "test_normal_count": 21,
+  "metrics_at_default_0.5_threshold": {
+    "accuracy": 0.875,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1_score": 0.0
+  },
+  "overall_curves": {
+    "roc_auc": 0.9682539682539681,
+    "pr_auc": 0.7638888888888888
+  },
+  "optimal_threshold_tuning": {
+    "optimal_threshold": 0.48,
+    "optimal_f1_score": 0.6666666666666666,
+    "precision_at_optimal": 0.5,
+    "recall_at_optimal": 1.0
+  },
+  "confusion_matrix_at_optimal": {
+    "true_negatives": 18,
+    "false_positives": 3,
+    "false_negatives": 0,
+    "true_positives": 3
+  }
+}

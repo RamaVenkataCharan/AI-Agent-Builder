@@ -1,0 +1,82 @@
+{
+  "data_source_tag": "synthetic_demo",
+  "sample_size_warnings": {
+    "synthetic_disclaimer": "WARNING: Evaluated on synthetic mock dataset. Results demonstrate pipeline correctness only, not production theft detection accuracy.",
+    "unreliable_sample_size_warning": "WARNING: Unreliable sample size (N_test_customers = 8, N_test_windows = 24). Metrics are subject to high variance."
+  },
+  "evaluation_protocol": "LEAKAGE-FREE: Threshold selected on validation split, applied once to unseen test split.",
+  "ablation_results": [
+    {
+      "model_name": "Hybrid Fusion (Bi-LSTM + Trans + Aux)",
+      "num_params": 91329,
+      "val_selected_threshold": 0.1,
+      "val_justification": {
+        "val_f1": 0.2222222222222222,
+        "val_precision": 0.125,
+        "val_recall": 1.0
+      },
+      "unbiased_test_results": {
+        "test_f1": 0.2222222222222222,
+        "test_precision": 0.125,
+        "test_recall": 1.0,
+        "test_accuracy": 0.125,
+        "test_roc_auc": 0.8095238095238095,
+        "test_pr_auc": 0.27045454545454545,
+        "confusion_matrix": {
+          "TN": 0,
+          "FP": 21,
+          "FN": 0,
+          "TP": 3
+        }
+      }
+    },
+    {
+      "model_name": "Bi-LSTM Standalone",
+      "num_params": 78401,
+      "val_selected_threshold": 0.1,
+      "val_justification": {
+        "val_f1": 0.2222222222222222,
+        "val_precision": 0.125,
+        "val_recall": 1.0
+      },
+      "unbiased_test_results": {
+        "test_f1": 0.2222222222222222,
+        "test_precision": 0.125,
+        "test_recall": 1.0,
+        "test_accuracy": 0.125,
+        "test_roc_auc": 0.5079365079365079,
+        "test_pr_auc": 0.12215608465608464,
+        "confusion_matrix": {
+          "TN": 0,
+          "FP": 21,
+          "FN": 0,
+          "TP": 3
+        }
+      }
+    },
+    {
+      "model_name": "Transformer Standalone",
+      "num_params": 10209,
+      "val_selected_threshold": 0.1,
+      "val_justification": {
+        "val_f1": 0.2222222222222222,
+        "val_precision": 0.125,
+        "val_recall": 1.0
+      },
+      "unbiased_test_results": {
+        "test_f1": 0.2222222222222222,
+        "test_precision": 0.125,
+        "test_recall": 1.0,
+        "test_accuracy": 0.125,
+        "test_roc_auc": 0.42857142857142855,
+        "test_pr_auc": 0.10206705059646237,
+        "confusion_matrix": {
+          "TN": 0,
+          "FP": 21,
+          "FN": 0,
+          "TP": 3
+        }
+      }
+    }
+  ]
+}
