@@ -1,104 +1,127 @@
-# AI Agent Builder
+# AI Agent Builder ⚡
 
-Autonomous AI that plans, executes, and learns to complete user-defined goals.
+AI Agent Builder is a lightweight, autonomous AI agent framework that converts a natural-language user goal into a structured, autonomously executed plan.
 
-## Overview
+Rather than returning a single LLM response, the system decomposes the goal into discrete tasks, selects and invokes tools, evaluates intermediate step outcomes, and iterates using a persistent RAG memory layer.
 
-AI Agent Builder transforms a user goal into a structured plan and then executes that plan autonomously using Large Language Models (LLMs). Instead of producing single responses, the system breaks goals into tasks, selects tools, runs steps, evaluates results, and iterates using memory.
+---
 
-## Key features
+## 🌟 Key Architecture & Capabilities
 
-- Goal → Task planning: turn high-level goals into actionable steps using LLM reasoning.
-- Autonomous execution engine: run tasks step-by-step with dynamic decision-making.
-- Tool integrations: code generator, file manager, optional web search, and custom Python tools.
-- Iterative agent loop: plan → execute → evaluate → improve.
-- Memory (RAG-based): store and retrieve past outputs for context-aware execution.
-- Flexible LLM support: local models (e.g., Ollama) or cloud APIs (OpenAI, etc.).
+```mermaid
+graph TD
+    User([User / API / UI]) -->|Goal / Instruction| API[FastAPI Server / Streamlit UI]
+    API --> Core[Agent Orchestrator]
 
-## Architecture
+    subgraph "Core Agent Loop"
+        Core --> Planner[Planner: Goal Decomposition]
+        Planner --> Queue[Task Execution Queue]
+        Queue --> Executor[Executor: Tool Selection & Run]
+        Executor --> Tools[Pluggable Tools: Files, Code, Web, Custom]
+        Tools --> Executor
+        Executor --> Evaluator[Evaluator: Reflection & Verdict]
+        Evaluator -->|PASS: Next Step / RETRY: Fix / REPLAN: Revise / FAIL| Core
+        
+        Memory[(RAG Vector Store & Session Memory)] <--> Planner
+        Memory <--> Executor
+        Memory <--> Evaluator
+    end
 
-- Backend: Python, FastAPI
-- LLM: Ollama / OpenAI
-- Memory: ChromaDB / FAISS
-- Frontend: React / Streamlit (optional)
-- Tools: custom Python modules
+    LLM[LLM Provider Layer: Ollama / OpenAI / Mock] <--> Planner
+    LLM <--> Executor
+    LLM <--> Evaluator
+```
 
-## Project structure
+- **Goal → Task Planning**: Decomposes free-text goals into ordered, actionable task steps with clear expected outcomes and replanning triggers.
+- **Autonomous Execution Engine**: Sequentially executes plan steps, synthesizing tool parameters and invoking tools without requiring human intervention between steps.
+- **Iterative Reflection Loop**: Evaluates each step's output against expected criteria and decides whether to `PASS`, `RETRY`, `REPLAN`, or `FAIL`.
+- **Pluggable Tool Registry**: Common adapter interface supporting File Manager, Code Execution, Web Search, and drop-in custom Python tools in `app/tools/custom/`.
+- **RAG Memory Layer**: Semantic search over past step outputs for short-term continuity across multi-step runs.
+- **Flexible LLM Provider Layer**: Switch between local models via **Ollama**, cloud APIs (**OpenAI**), or deterministic **Mock** mode without code changes.
+- **FastAPI Backend & Interactive Dashboard**: Complete REST API, Server-Sent Events (SSE), and a modern Streamlit UI.
 
-A high-level layout of the repository (folders may vary):
+---
 
-- app/          - backend application and agent logic
-- tools/        - tool adapters and utilities
-- frontend/     - optional UI (React / Streamlit)
-- memory/       - memory and vector-store helpers
-- tests/        - unit and integration tests
-- requirements.txt
-- README.md
+## 🚀 Quick Start
 
-## Quick start
+### 1. Installation
+Create and activate a virtual environment:
+```bash
+python -m venv .venv
+# On Windows:
+.venv\Scripts\activate
+# On Linux/macOS:
+source .venv/bin/activate
 
-1. Clone the repository
+pip install -r requirements.txt
+```
 
-   git clone https://github.com/RamaVenkataCharan/AI-Agent-Builder.git
-   cd AI-Agent-Builder
+### 2. Configuration
+Copy `.env.example` to `.env` and set your preferred provider:
+```bash
+cp .env.example .env
+```
 
-2. (Optional) Create and activate a virtual environment
+To run with **Local Ollama**:
+```env
+LLM_PROVIDER=ollama
+LLM_MODEL=llama3:latest
+OLLAMA_BASE_URL=http://localhost:11434
+```
 
-   python -m venv .venv
-   source .venv/bin/activate   # macOS / Linux
-   .venv\Scripts\activate    # Windows
+To run with **OpenAI**:
+```env
+LLM_PROVIDER=openai
+LLM_MODEL=gpt-4o-mini
+OPENAI_API_KEY=your_key_here
+```
 
-3. Install dependencies
+To run in **Offline Mock Mode** (instant testing):
+```env
+LLM_PROVIDER=mock
+```
 
-   pip install -r requirements.txt
+---
 
-4. Run the backend
+## 🖥️ Running the Application
 
-   uvicorn main:app --reload
+### Option A: Interactive Web UI (Streamlit)
+```bash
+streamlit run ui/dashboard.py
+```
+Open [http://localhost:8501](http://localhost:8501) in your browser.
 
-5. (Optional) Run with Ollama local model
+### Option B: FastAPI Backend API Server
+```bash
+uvicorn app.main:app --port 8000 --reload
+```
+- Interactive API Docs: [http://localhost:8000/docs](http://localhost:8000/docs)
+- Health Check: [http://localhost:8000/health](http://localhost:8000/health)
 
-   ollama run llama3
+---
 
-## Example
+## 🛠️ Adding Custom Tools
 
-Input: "Build a simple todo app"
+To add a new tool, create a new Python file in `app/tools/custom/` inheriting from `BaseTool`:
 
-Agent output (example plan):
+```python
+# app/tools/custom/my_tool.py
+from app.tools.base import BaseTool, ToolResult
 
-1. Create frontend UI
-2. Setup backend API
-3. Connect frontend with backend
-4. Store data in a database
+class MyTool(BaseTool):
+    name: str = "my_tool"
+    description: str = "Describe what this tool does and its parameters."
 
-The agent can then execute these steps automatically using integrated tools.
+    def execute(self, text: str, **kwargs) -> ToolResult:
+        # Custom logic here
+        return ToolResult(success=True, output=f"Processed: {text}")
+```
+The system will automatically discover and register your tool upon startup!
 
-## Use cases
+---
 
-- Automating development workflows
-- Generating full-stack application scaffolding
-- Personal AI assistant for task automation
-- Experimenting with autonomous agents for research and hackathons
+## 🧪 Running Tests
 
-## Roadmap / Future improvements
-
-- Multi-agent collaboration (Planner + Executor + Critic)
-- Browser automation
-- GitHub integration (auto repo creation / PRs)
-- Plugin system for third-party tools
-- Voice-controlled agents
-
-## Contributing
-
-Contributions are welcome — please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (git checkout -b feat/my-feature)
-3. Commit your changes
-4. Open a Pull Request describing your changes
-
-Please follow any existing project contribution guidelines and run tests locally.
-
-## License
-
-This project is licensed under the MIT License.
+```bash
+pytest tests/ -v
+```
